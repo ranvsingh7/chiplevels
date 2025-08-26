@@ -1,103 +1,424 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
+
+// Mock data for demonstration - in real app this would come from your database
+const featuredPosts = [
+  {
+    id: 1,
+    title: "Latest RTX 4090 vs RTX 4080: Performance Deep Dive",
+    excerpt: "We compare the flagship graphics cards in real-world gaming scenarios, synthetic benchmarks, and power efficiency tests.",
+    category: "Hardware",
+    author: "Tech Expert",
+    publishedAt: new Date('2024-01-15'),
+    readTime: "8 min read",
+    image: "/api/placeholder/400/250"
+  },
+  {
+    id: 2,
+    title: "5G Network Security: What You Need to Know",
+    excerpt: "Understanding the security implications of 5G networks and how to protect your devices in the new era of connectivity.",
+    category: "Networking",
+    author: "Network Specialist",
+    publishedAt: new Date('2024-01-12'),
+    readTime: "6 min read",
+    image: "/api/placeholder/400/250"
+  },
+  {
+    id: 3,
+    title: "iOS 18 vs Android 15: Feature Comparison",
+    excerpt: "A comprehensive look at the latest mobile operating systems and their new features, performance improvements, and user experience.",
+    category: "Mobile",
+    author: "Mobile Analyst",
+    publishedAt: new Date('2024-01-10'),
+    readTime: "10 min read",
+    image: "/api/placeholder/400/250"
+  }
+];
+
+const categories = [
+  {
+    name: "Hardware",
+    description: "Computer components, GPUs, CPUs, and more",
+    icon: "🔧",
+    href: "/categories/hardware",
+    color: "from-blue-500 to-cyan-500",
+    delay: "0ms"
+  },
+  {
+    name: "Networking",
+    description: "WiFi, 5G, routers, and network security",
+    icon: "🌐",
+    href: "/categories/networking",
+    color: "from-green-500 to-emerald-500",
+    delay: "100ms"
+  },
+  {
+    name: "Mobile",
+    description: "Smartphones, tablets, and mobile tech",
+    icon: "📱",
+    href: "/categories/mobile",
+    color: "from-purple-500 to-pink-500",
+    delay: "200ms"
+  },
+  {
+    name: "Software",
+    description: "Apps, operating systems, and development",
+    icon: "💻",
+    href: "/categories/software",
+    color: "from-orange-500 to-red-500",
+    delay: "300ms"
+  }
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-black via-slate-900 to-black text-white overflow-hidden min-h-screen flex items-center">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        
+        {/* Floating Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 animate-float" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}></div>
+        </div>
+
+        {/* Floating Tech Icons - Clean without borders/boxes */}
+        {/* Computer & Hardware Icons */}
+        <div className="absolute top-1/4 left-10 animate-float" style={{animationDelay: '0s', animationDuration: '6s'}}>
+          <span className="text-7xl opacity-60 text-blue-400 drop-shadow-2xl">💻</span>
+        </div>
+        
+        <div className="absolute top-1/3 right-20 animate-float" style={{animationDelay: '1s', animationDuration: '8s'}}>
+          <span className="text-6xl opacity-60 text-green-400 drop-shadow-2xl">🔧</span>
+        </div>
+        
+        <div className="absolute bottom-1/3 left-20 animate-float" style={{animationDelay: '2s', animationDuration: '7s'}}>
+          <span className="text-6xl opacity-60 text-cyan-400 drop-shadow-2xl">🌐</span>
+        </div>
+        
+        <div className="absolute bottom-1/4 right-10 animate-float" style={{animationDelay: '3s', animationDuration: '9s'}}>
+          <span className="text-7xl opacity-60 text-purple-400 drop-shadow-2xl">📱</span>
+        </div>
+        
+        {/* RAM & Memory Icons */}
+        <div className="absolute top-1/6 left-1/4 animate-float" style={{animationDelay: '0.5s', animationDuration: '5s'}}>
+          <span className="text-5xl opacity-50 text-yellow-400 drop-shadow-2xl">🧠</span>
+        </div>
+        
+        <div className="absolute top-1/2 right-1/3 animate-float" style={{animationDelay: '1.5s', animationDuration: '6.5s'}}>
+          <span className="text-5xl opacity-50 text-indigo-400 drop-shadow-2xl">💾</span>
+        </div>
+        
+        {/* Graphics Card & GPU Icons */}
+        <div className="absolute top-2/3 left-1/3 animate-float" style={{animationDelay: '2.5s', animationDuration: '7.5s'}}>
+          <span className="text-6xl opacity-50 text-red-400 drop-shadow-2xl">🎮</span>
+        </div>
+        
+        <div className="absolute bottom-1/6 right-1/4 animate-float" style={{animationDelay: '3.5s', animationDuration: '5.5s'}}>
+          <span className="text-5xl opacity-50 text-amber-400 drop-shadow-2xl">⚡</span>
+        </div>
+        
+        {/* Laptop & Mobile Icons */}
+        <div className="absolute top-1/5 right-1/6 animate-float" style={{animationDelay: '0.8s', animationDuration: '8.5s'}}>
+          <span className="text-5xl opacity-50 text-teal-400 drop-shadow-2xl">💻</span>
+        </div>
+        
+        <div className="absolute bottom-1/5 left-1/6 animate-float" style={{animationDelay: '1.8s', animationDuration: '6.8s'}}>
+          <span className="text-5xl opacity-50 text-violet-400 drop-shadow-2xl">📱</span>
+        </div>
+        
+        {/* Software & Code Icons */}
+        <div className="absolute top-1/3 left-1/2 animate-float" style={{animationDelay: '2.8s', animationDuration: '7.2s'}}>
+          <span className="text-5xl opacity-50 text-emerald-400 drop-shadow-2xl">🔧</span>
+        </div>
+        
+        <div className="absolute bottom-1/3 right-1/2 animate-float" style={{animationDelay: '3.8s', animationDuration: '8.2s'}}>
+          <span className="text-5xl opacity-50 text-rose-400 drop-shadow-2xl">💻</span>
+        </div>
+        
+        {/* Network & Connectivity Icons */}
+        <div className="absolute top-1/2 left-1/6 animate-float" style={{animationDelay: '4.2s', animationDuration: '6.2s'}}>
+          <span className="text-5xl opacity-50 text-sky-400 drop-shadow-2xl">🌐</span>
+        </div>
+        
+        <div className="absolute bottom-1/2 right-1/6 animate-float" style={{animationDelay: '4.8s', animationDuration: '7.8s'}}>
+          <span className="text-5xl opacity-50 text-lime-400 drop-shadow-2xl">📡</span>
+        </div>
+        
+        {/* Storage & HDD Icons */}
+        <div className="absolute top-3/4 left-2/3 animate-float" style={{animationDelay: '5.2s', animationDuration: '6.8s'}}>
+          <span className="text-5xl opacity-50 text-orange-400 drop-shadow-2xl">💿</span>
+        </div>
+        
+        <div className="absolute bottom-3/4 right-2/3 animate-float" style={{animationDelay: '5.8s', animationDuration: '8.8s'}}>
+          <span className="text-5xl opacity-50 text-fuchsia-400 drop-shadow-2xl">🖥️</span>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 w-full">
+          <div className="text-center">
+            {/* Modern Animated Logo */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative group">
+                {/* Main Logo Container */}
+                <div className="relative w-28 h-28 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-3xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-all duration-500 animate-pulse overflow-hidden">
+                  {/* Inner Glow */}
+                  <div className="absolute inset-2 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+                  
+                  {/* Logo Text */}
+                  <div className="relative z-10 text-center">
+                    <div className="text-3xl font-black text-white tracking-tight">CL</div>
+                    <div className="text-xs font-bold text-white/80 tracking-widest">TECH</div>
+                  </div>
+                  
+                  {/* Animated Border */}
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0.5 rounded-3xl bg-black"></div>
+                  
+                  {/* Corner Accents */}
+                  <div className="absolute top-2 left-2 w-3 h-3 bg-cyan-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-2 right-2 w-3 h-3 bg-purple-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-2 left-2 w-3 h-3 bg-blue-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-2 right-2 w-3 h-3 bg-cyan-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                
+                {/* Outer Glow Effect */}
+                <div className="absolute -inset-3 bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-500 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                
+                {/* Floating Particles */}
+                <div className="absolute -top-2 -left-2 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-75"></div>
+                <div className="absolute -top-2 -right-2 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-75" style={{animationDelay: '0.5s'}}></div>
+                <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-75" style={{animationDelay: '1s'}}></div>
+                <div className="absolute -bottom-2 -right-2 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-75" style={{animationDelay: '1.5s'}}></div>
+              </div>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent animate-fade-in-up">
+              Welcome to ChipLevels
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
+              Your ultimate destination for computer hardware, networking, mobile, and software insights. 
+              Expert reviews, tutorials, and cutting-edge tech news.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up" style={{animationDelay: '400ms'}}>
+              <Link
+                href="/blog"
+                className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 overflow-hidden"
+              >
+                <span className="relative z-10">Explore Blog</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              </Link>
+              <Link
+                href="/categories/hardware"
+                className="group px-10 py-5 border-2 border-white/30 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm hover:backdrop-blur-md"
+              >
+                <span className="flex items-center gap-2">
+                  Latest Reviews
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section */}
+      <section className="py-24 bg-slate-900 dark:bg-black relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black"></div>
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(45deg, #3b82f6 25%, transparent 25%), linear-gradient(-45deg, #3b82f6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #3b82f6 75%), linear-gradient(-45deg, transparent 75%, #3b82f6 75%)`,
+            backgroundSize: '60px 60px',
+            backgroundPosition: '0 0, 0 30px, 30px -30px, -30px 0px'
+          }}></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">
+              Explore Tech Categories
+            </h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
+              Dive deep into specific areas of technology with our comprehensive category coverage
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {categories.map((category, index) => (
+              <Link
+                key={category.name}
+                href={category.href}
+                className="group block animate-fade-in-up"
+                style={{animationDelay: category.delay}}
+              >
+                <div className="relative p-8 bg-slate-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 border border-slate-700 overflow-hidden">
+                  {/* Hover Effect Background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                  
+                  {/* Icon Container */}
+                  <div className={`relative w-20 h-20 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg`}>
+                    {category.icon}
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors duration-300">
+                    {category.name}
+                  </h3>
+                  <p className="text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
+                    {category.description}
+                  </p>
+                  
+                  {/* Arrow Indicator */}
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Posts Section */}
+      <section className="py-24 bg-black relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">
+              Featured Articles
+            </h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
+              Stay updated with our latest insights and reviews from the tech world
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {featuredPosts.map((post, index) => (
+              <article
+                key={post.id}
+                className="group animate-fade-in-up"
+                style={{animationDelay: `${index * 200}ms`}}
+              >
+                <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700">
+                  {/* Image Container */}
+                  <div className="relative h-56 bg-gradient-to-br from-slate-700 to-slate-600 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span className="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">
+                      Image Placeholder
+                    </span>
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white font-medium">Read Article</span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="px-4 py-2 bg-gradient-to-r from-blue-900/30 to-purple-900/30 text-blue-300 text-sm font-medium rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-slate-400 text-sm font-medium">
+                        {post.readTime}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-white mb-4 line-clamp-2 group-hover:text-blue-400 transition-colors duration-300">
+                      {post.title}
+                    </h3>
+                    <p className="text-slate-300 mb-6 line-clamp-3 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center justify-between mb-6">
+                      <span className="text-sm text-slate-400 font-medium">
+                        By {post.author}
+                      </span>
+                      <span className="text-sm text-slate-400">
+                        {formatDistanceToNow(post.publishedAt, { addSuffix: true })}
+                      </span>
+                    </div>
+                    
+                    {/* Read More Button */}
+                    <div className="pt-4 border-t border-slate-700">
+                      <span className="inline-flex items-center text-blue-400 font-medium group-hover:text-blue-300 transition-colors duration-300">
+                        Read More
+                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          
+          <div className="text-center mt-16 animate-fade-in-up" style={{animationDelay: '800ms'}}>
+            <Link
+              href="/blog"
+              className="group inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 overflow-hidden"
+            >
+              <span className="relative z-10">View All Posts</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              <svg className="ml-3 w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900/50 to-blue-900/50"></div>
+          <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
+            Stay Updated with ChipLevels
+          </h2>
+          <p className="text-xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
+            Get the latest tech news, reviews, and insights delivered to your inbox
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '400ms'}}>
+            <div className="flex-1 relative group">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-6 py-4 rounded-2xl text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 bg-white/90 backdrop-blur-sm group-hover:bg-white group-focus:bg-white"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 blur-xl"></div>
+            </div>
+            <button className="px-10 py-4 bg-white text-blue-600 font-semibold rounded-2xl hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/25 transform">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
