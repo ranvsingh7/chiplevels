@@ -222,7 +222,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               No posts found in {categoryInfo.name}
             </h3>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              We're working on creating amazing content for this category. Check back soon!
+              We&apos;re working on creating amazing content for this category. Check back soon!
             </p>
             <Link
               href="/blog"
