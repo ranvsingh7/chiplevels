@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Image from 'next/image';
 
 interface BlogPost {
   _id: string;
@@ -176,13 +175,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Featured Image */}
           {post.featuredImage && (
             <div className="mb-8">
-              {/* <Image
+              <img
                 src={post.featuredImage}
                 alt={post.title}
-                width={800}
-                height={400}
                 className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg"
-              /> */}
+              />
             </div>
           )}
 

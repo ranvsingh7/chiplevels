@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import Image from 'next/image';
 
 interface BlogPost {
   _id: string;
@@ -15,6 +14,7 @@ interface BlogPost {
   publishedAt: string;
   tags: string[];
   views: number;
+  featuredImage?: string;
 }
 
 interface BlogResponse {
@@ -44,7 +44,8 @@ export default function BlogPage() {
       author: 'Alex Chen',
       publishedAt: new Date('2024-12-15').toISOString(),
       tags: ['GPU', 'Gaming', 'Performance', 'RTX', 'Graphics'],
-      views: 1247
+      views: 1247,
+      featuredImage: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f7?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '2',
@@ -55,7 +56,8 @@ export default function BlogPage() {
       author: 'Sarah Johnson',
       publishedAt: new Date('2024-12-12').toISOString(),
       tags: ['5G', 'Security', 'Networking', 'Mobile', 'Cybersecurity'],
-      views: 892
+      views: 892,
+      featuredImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '3',
@@ -66,7 +68,8 @@ export default function BlogPage() {
       author: 'Mike Rodriguez',
       publishedAt: new Date('2024-12-10').toISOString(),
       tags: ['iOS', 'Android', 'Mobile', 'Operating System', 'Smartphones'],
-      views: 1563
+      views: 1563,
+      featuredImage: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '4',
@@ -77,7 +80,8 @@ export default function BlogPage() {
       author: 'David Kim',
       publishedAt: new Date('2024-12-08').toISOString(),
       tags: ['Next.js', 'Web Development', 'React', 'Performance', 'JavaScript'],
-      views: 743
+      views: 743,
+      featuredImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '5',
@@ -88,7 +92,8 @@ export default function BlogPage() {
       author: 'Lisa Wang',
       publishedAt: new Date('2024-12-05').toISOString(),
       tags: ['Storage', 'SSD', 'HDD', 'Performance', 'Hardware'],
-      views: 1128
+      views: 1128,
+      featuredImage: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd912?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '6',
@@ -99,7 +104,8 @@ export default function BlogPage() {
       author: 'Robert Chen',
       publishedAt: new Date('2024-12-03').toISOString(),
       tags: ['WiFi 7', 'Wireless', 'Networking', 'Technology', 'Internet'],
-      views: 967
+      views: 967,
+      featuredImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '7',
@@ -110,7 +116,8 @@ export default function BlogPage() {
       author: 'Emma Thompson',
       publishedAt: new Date('2024-11-30').toISOString(),
       tags: ['Machine Learning', 'Mobile', 'AI', 'Development', 'Apps'],
-      views: 654
+      views: 654,
+      featuredImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     },
     {
       _id: '8',
@@ -121,7 +128,8 @@ export default function BlogPage() {
       author: 'James Wilson',
       publishedAt: new Date('2024-11-28').toISOString(),
       tags: ['Monitor', 'Gaming', 'Hardware', 'Display', 'Technology'],
-      views: 1432
+      views: 1432,
+      featuredImage: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80'
     }
   ];
 
@@ -298,13 +306,11 @@ export default function BlogPage() {
                   {/* Featured Image */}
                   {post.featuredImage ? (
                     <div className="h-48 relative overflow-hidden">
-                      {/* <Image
+                      <img
                         src={post.featuredImage}
                         alt={post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      /> */}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
                   ) : (
                     <div className="h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 flex items-center justify-center">

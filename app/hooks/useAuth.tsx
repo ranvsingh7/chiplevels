@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIsLoading(false);
     }
-  }, [user]);
+  }, []); // Remove user dependency to prevent infinite loops
 
   // Debug logging for user state changes
   useEffect(() => {

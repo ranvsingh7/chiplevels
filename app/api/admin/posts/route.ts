@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build filter object
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
 
     // Status filter (admin can see all posts, including drafts)
     if (status && status !== 'all') {

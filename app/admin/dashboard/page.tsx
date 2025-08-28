@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 interface BlogPost {
   _id: string;
@@ -621,7 +620,7 @@ export default function AdminDashboard() {
               </h3>
             </div>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              Are you sure you want to delete "<span className="font-semibold">{deleteModal.postTitle}</span>"? This action cannot be undone.
+              Are you sure you want to delete &quot;<span className="font-semibold">{deleteModal.postTitle}</span>&quot;? This action cannot be undone.
             </p>
             <div className="flex space-x-3">
               <button

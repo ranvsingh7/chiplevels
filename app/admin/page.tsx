@@ -16,19 +16,7 @@ export default function AdminPage() {
   // Debug logging
   console.log('AdminPage - Current state:', { user, isLoading, hasUser: !!user });
 
-  // Temporary debug function
-  const debugSetUser = () => {
-    const testUser = {
-      _id: 'test123',
-      email: 'test@test.com',
-      name: 'Test User',
-      role: 'admin',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    console.log('Setting test user:', testUser);
-    // This will help us see if the issue is with user state or rendering
-  };
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,6 +184,20 @@ export default function AdminPage() {
                     Use your admin credentials to access the dashboard
                   </p>
                 </div>
+
+                {/* Dashboard Navigation Button */}
+                <div className="text-center pt-4">
+                  <button
+                    type="button"
+                    onClick={() => router.push('/admin/dashboard')}
+                    className="inline-flex items-center px-6 py-3 text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 bg-slate-800/30 hover:bg-slate-700/50 rounded-xl backdrop-blur-sm border border-slate-700/50 hover:border-slate-600/50"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    Go to Dashboard
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -236,12 +238,23 @@ export default function AdminPage() {
                 ChipLevels Admin
               </h1>
             </div>
-            <button
-              onClick={logout}
-              className="px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200"
-            >
-              Logout
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => router.push('/admin/dashboard')}
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 flex items-center space-x-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span>Dashboard</span>
+              </button>
+              <button
+                onClick={logout}
+                className="px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>

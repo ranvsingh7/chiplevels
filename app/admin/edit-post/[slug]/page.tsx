@@ -24,12 +24,10 @@ export default function EditPostPage({ params }: { params: Promise<{ slug: strin
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
-  const [slug, setSlug] = useState('');
 
   useEffect(() => {
     const getSlug = async () => {
       const { slug: postSlug } = await params;
-      setSlug(postSlug);
       fetchPost(postSlug);
     };
     getSlug();
@@ -98,7 +96,7 @@ export default function EditPostPage({ params }: { params: Promise<{ slug: strin
     }
   };
 
-  const handleInputChange = (field: keyof BlogPost, value: any) => {
+  const handleInputChange = (field: keyof BlogPost, value: string | string[]) => {
     if (post) {
       setPost({ ...post, [field]: value });
     }
@@ -142,7 +140,7 @@ export default function EditPostPage({ params }: { params: Promise<{ slug: strin
               Post Not Found
             </h1>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              The post you're looking for doesn't exist or you don't have permission to edit it.
+              The post you&apos;re looking for doesn&apos;t exist or you don&apos;t have permission to edit it.
             </p>
             <Link
               href="/admin/dashboard"
