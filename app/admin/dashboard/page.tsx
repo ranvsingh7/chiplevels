@@ -56,7 +56,7 @@ export default function AdminDashboard() {
   // Redirect if not authenticated
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push('/admin');
+      router.push('/signin');
     }
   }, [user, isLoading, router]);
 

@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { user, isLoading } = useAuth();
 
   // Handle scroll effect
   useEffect(() => {
@@ -26,7 +28,10 @@ export default function Navigation() {
     { href: '/categories/networking', label: 'Networking' },
     { href: '/categories/mobile', label: 'Mobile' },
     { href: '/categories/software', label: 'Software' },
-    { href: '/admin', label: 'Admin' },
+    { 
+      href: user ? '/admin/dashboard' : '/signin', 
+      label: user ? user.name : 'Sign In' 
+    },
   ];
 
   return (
