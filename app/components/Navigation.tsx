@@ -20,6 +20,7 @@ export default function Navigation() {
 
   const navItems = [
     { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
     { href: '/blog', label: 'Blog' },
     { href: '/categories/hardware', label: 'Hardware' },
     { href: '/categories/networking', label: 'Networking' },
@@ -31,8 +32,8 @@ export default function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl border-b border-slate-200/50 dark:border-slate-700/50' 
-        : 'bg-transparent'
+        ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl border-b border-slate-200/50 dark:border-slate-700/50' 
+        : 'bg-black/20 dark:bg-black/30 backdrop-blur-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -79,7 +80,9 @@ export default function Navigation() {
                 className={`relative px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 group ${
                   pathname === item.href
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'
+                    : isScrolled 
+                      ? 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
+                      : 'text-white hover:text-blue-200'
                 }`}
               >
                 <span className="relative z-10">{item.label}</span>
@@ -97,7 +100,11 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative p-3 rounded-xl text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 group"
+            className={`md:hidden relative p-3 rounded-xl transition-all duration-300 group ${
+              isScrolled 
+                ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                : 'text-white hover:text-blue-200 hover:bg-white/10'
+            }`}
           >
             <div className="relative w-6 h-6">
               <span className={`absolute inset-0 transform transition-all duration-300 ${
@@ -133,7 +140,9 @@ export default function Navigation() {
                 className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 transform hover:scale-105 ${
                   pathname === item.href
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : isScrolled 
+                      ? 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      : 'text-white hover:text-blue-200 hover:bg-white/10'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >

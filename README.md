@@ -81,13 +81,37 @@ chiplevels/
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-### Admin Access
+### Authentication Setup
 
-To access the admin panel:
+The application now includes a complete authentication system with JWT tokens and MongoDB integration.
+
+#### 1. Environment Setup
+Create a `.env.local` file in the root directory:
+```bash
+# Copy the example file
+cp env.example .env.local
+
+# Edit .env.local with your values
+MONGODB_URI=mongodb://localhost:27017/chiplevels
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+```
+
+#### 2. Database Setup
+Make sure MongoDB is running on your system, then seed the initial admin user:
+```bash
+npm run seed
+```
+
+#### 3. Admin Access
 - Navigate to `/admin`
-- Use demo credentials:
+- Use the seeded credentials:
   - Email: `admin@chiplevels.com`
   - Password: `admin123`
+
+#### 4. API Endpoints
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/verify` - Token verification
 
 ## 🎨 Design Features
 
