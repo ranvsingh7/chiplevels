@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ContactPage() {
@@ -57,7 +58,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Have a question or want to discuss your technology needs? We're here to help!
+              Have a question or want to discuss your technology needs? We&apos;re here to help!
             </p>
           </div>
         </div>
@@ -80,7 +81,7 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <p className="text-green-800 dark:text-green-200 font-medium">
-                      Thank you! Your message has been sent successfully. We'll get back to you soon.
+                      Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
                     </p>
                   </div>
                 </div>
@@ -305,20 +306,20 @@ export default function ContactPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="/blog" className="flex items-center gap-2 hover:text-blue-200 transition-colors">
+                  <Link href="/blog" className="flex items-center gap-2 hover:text-blue-200 transition-colors">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                     Our Blog
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/categories/hardware" className="flex items-center gap-2 hover:text-blue-200 transition-colors">
+                  <Link href="/categories/hardware" className="flex items-center gap-2 hover:text-blue-200 transition-colors">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     Hardware Reviews
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

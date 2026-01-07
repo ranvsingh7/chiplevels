@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Return user data and token
     const userObject = user.toObject();
-    const { password: _, ...userWithoutPassword } = userObject;
+    const { ...userWithoutPassword } = userObject;
 
     return NextResponse.json({
       message: 'Login successful',
