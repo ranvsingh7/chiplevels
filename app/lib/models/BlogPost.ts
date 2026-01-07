@@ -25,10 +25,8 @@ const blogPostSchema = new mongoose.Schema<IBlogPost>({
   },
   slug: {
     type: String,
-    required: true,
+    required: false, // Pre-save hook will always generate it from _id
     unique: true,
-    lowercase: true,
-    trim: true,
     index: true,
   },
   excerpt: {
@@ -81,26 +79,14 @@ blogPostSchema.index({ category: 1 });
 blogPostSchema.index({ status: 1 });
 blogPostSchema.index({ publishedAt: -1 });
 
-// Generate slug from title
-blogPostSchema.pre('save', async function(next) {
+// Set slug to unique ID
+blogPostSchema.pre('save', function(next) {
   try {
-    // Always generate slug if it's missing or if title is modified
-    if (!this.slug || this.isModified('title')) {
-      const baseSlug = this.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-      
-      // Check if slug already exists and make it unique
-      let slug = baseSlug;
-      let counter = 1;
-      
-      while (await mongoose.model('BlogPost').findOne({ slug, _id: { $ne: this._id } })) {
-        slug = `${baseSlug}-${counter}`;
-        counter++;
-      }
-      
-      this.slug = slug;
+    // Always set slug to the document's unique ID if it's missing
+    if (!this.slug) {
+      // Mongoose generates _id before pre-save hooks run
+      // Use it directly to set the slug
+      this.slug = this._id.toString();
     }
     next();
   } catch (error) {

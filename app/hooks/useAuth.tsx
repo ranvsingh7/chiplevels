@@ -37,13 +37,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []); // Remove user dependency to prevent infinite loops
 
   // Debug logging for user state changes
-  useEffect(() => {
-    console.log('useAuth - User state changed:', { user, token, isLoading });
-  }, [user, token, isLoading]);
+  // useEffect(() => {
+  //   console.log('useAuth - User state changed:', { user, token, isLoading });
+  // }, [user, token, isLoading]);
 
   const verifyToken = async (tokenToVerify: string) => {
     try {
-      console.log('Verifying token:', tokenToVerify);
+      // console.log('Verifying token:', tokenToVerify);
       const response = await fetch('/api/auth/verify', {
         headers: {
           'Authorization': `Bearer ${tokenToVerify}`,
@@ -52,12 +52,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Token verification successful, setting user:', data.user);
+        // console.log('Token verification successful, setting user:', data.user);
         setUser(data.user);
         setToken(tokenToVerify);
         localStorage.setItem('authToken', tokenToVerify);
       } else {
-        console.log('Token verification failed, clearing user state');
+        // console.log('Token verification failed, clearing user state');
         // Token is invalid, remove it
         localStorage.removeItem('authToken');
         setToken(null);
@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Login successful, setting user:', data.user);
+        // console.log('Login successful, setting user:', data.user);
         setUser(data.user);
         setToken(data.token);
         localStorage.setItem('authToken', data.token);

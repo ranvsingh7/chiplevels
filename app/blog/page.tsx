@@ -38,7 +38,7 @@ export default function BlogPage() {
     {
       _id: '1',
       title: 'Latest RTX 4090 vs RTX 4080: Performance Deep Dive',
-      slug: 'rtx-4090-vs-rtx-4080-performance-deep-dive',
+      slug: '1',
       excerpt: 'We compare the flagship graphics cards in real-world gaming scenarios, synthetic benchmarks, and power efficiency tests. Discover which GPU delivers the best value for your gaming setup.',
       category: 'Hardware',
       author: 'Alex Chen',
@@ -50,7 +50,7 @@ export default function BlogPage() {
     {
       _id: '2',
       title: '5G Network Security: What You Need to Know in 2024',
-      slug: '5g-network-security-2024-guide',
+      slug: '2',
       excerpt: 'Understanding the security implications of 5G networks and how to protect your devices in the new era of connectivity. Learn about the latest threats and protection methods.',
       category: 'Networking',
       author: 'Sarah Johnson',
@@ -62,7 +62,7 @@ export default function BlogPage() {
     {
       _id: '3',
       title: 'iOS 18 vs Android 15: Feature Comparison & Analysis',
-      slug: 'ios-18-vs-android-15-comparison',
+      slug: '3',
       excerpt: 'A comprehensive look at the latest mobile operating systems and their new features, performance improvements, and user experience enhancements.',
       category: 'Mobile',
       author: 'Mike Rodriguez',
@@ -74,7 +74,7 @@ export default function BlogPage() {
     {
       _id: '4',
       title: 'Building Scalable Web Applications with Next.js 15',
-      slug: 'nextjs-15-scalable-web-applications',
+      slug: '4',
       excerpt: 'Explore the new features in Next.js 15 and learn how to build high-performance, scalable web applications with modern React patterns.',
       category: 'Software',
       author: 'David Kim',
@@ -86,7 +86,7 @@ export default function BlogPage() {
     {
       _id: '5',
       title: 'SSD vs HDD: Storage Solutions for 2024',
-      slug: 'ssd-vs-hdd-storage-solutions-2024',
+      slug: '5',
       excerpt: 'Compare different storage solutions and understand which type of drive is best for your specific use case. Performance, reliability, and cost analysis.',
       category: 'Hardware',
       author: 'Lisa Wang',
@@ -98,7 +98,7 @@ export default function BlogPage() {
     {
       _id: '6',
       title: 'WiFi 7: The Future of Wireless Connectivity',
-      slug: 'wifi-7-future-wireless-connectivity',
+      slug: '6',
       excerpt: 'Discover the revolutionary features of WiFi 7, including increased bandwidth, lower latency, and improved network efficiency for modern homes and offices.',
       category: 'Networking',
       author: 'Robert Chen',
@@ -110,7 +110,7 @@ export default function BlogPage() {
     {
       _id: '7',
       title: 'Machine Learning in Mobile Apps: A Developer\'s Guide',
-      slug: 'machine-learning-mobile-apps-developer-guide',
+      slug: '7',
       excerpt: 'Learn how to integrate machine learning capabilities into your mobile applications. From basic implementations to advanced AI features.',
       category: 'Software',
       author: 'Emma Thompson',
@@ -122,7 +122,7 @@ export default function BlogPage() {
     {
       _id: '8',
       title: 'Gaming Monitor Buying Guide: 2024 Edition',
-      slug: 'gaming-monitor-buying-guide-2024',
+      slug: '8',
       excerpt: 'Everything you need to know about choosing the perfect gaming monitor. Resolution, refresh rate, response time, and panel technology explained.',
       category: 'Hardware',
       author: 'James Wilson',
@@ -299,7 +299,7 @@ export default function BlogPage() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {posts.map((post) => (
-                <Link key={post._id} href={`/blog/${post.slug}`}>
+                <Link key={post._id} href={`/blog/${post._id}`}>
                   <article
                     className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer h-full flex flex-col"
                   >

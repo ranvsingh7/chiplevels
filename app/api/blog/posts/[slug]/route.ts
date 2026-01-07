@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import connectDB from '@/app/lib/db';
 import { BlogPost } from '@/app/lib/models/BlogPost';
 
@@ -11,11 +12,18 @@ export async function GET(
 
     const { slug } = await params;
 
-    // Find the blog post by slug
-    const post = await BlogPost.findOne({ 
-      slug, 
-      status: 'published' 
-    });
+    const filter = { status: 'published' } as const;
+
+    // Try to find by ID first (frontend uses IDs in URLs)
+    let post = null;
+    if (mongoose.Types.ObjectId.isValid(slug)) {
+      post = await BlogPost.findOne({ _id: slug, ...filter });
+    }
+    
+    // If not found by ID, try finding by slug (for backwards compatibility)
+    if (!post) {
+      post = await BlogPost.findOne({ slug, ...filter });
+    }
 
     if (!post) {
       return NextResponse.json(

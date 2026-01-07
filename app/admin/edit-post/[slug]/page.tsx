@@ -26,11 +26,11 @@ export default function EditPostPage({ params }: { params: Promise<{ slug: strin
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const getSlug = async () => {
-      const { slug: postSlug } = await params;
-      fetchPost(postSlug);
+    const resolveParams = async () => {
+      const { slug: postId } = await params;
+      fetchPost(postId);
     };
-    getSlug();
+    resolveParams();
   }, [params]);
 
   useEffect(() => {
@@ -39,10 +39,10 @@ export default function EditPostPage({ params }: { params: Promise<{ slug: strin
     }
   }, [user, isLoading, router]);
 
-  const fetchPost = async (postSlug: string) => {
+  const fetchPost = async (postId: string) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/admin/posts/slug/${postSlug}`, {
+      const response = await fetch(`/api/admin/posts/${postId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }

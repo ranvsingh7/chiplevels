@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import connectDB from '@/app/lib/db';
 import { BlogPost } from '@/app/lib/models/BlogPost';
 import { getTokenFromHeader, verifyToken } from '@/app/lib/auth';
@@ -30,8 +31,16 @@ export async function GET(
 
     const { slug } = await params;
 
-    // Find the post by slug
-    const post = await BlogPost.findOne({ slug });
+    // Try to find by ID first (frontend uses IDs in URLs)
+    let post = null;
+    if (mongoose.Types.ObjectId.isValid(slug)) {
+      post = await BlogPost.findById(slug);
+    }
+    
+    // If not found by ID, try finding by slug (for backwards compatibility)
+    if (!post) {
+      post = await BlogPost.findOne({ slug });
+    }
 
     if (!post) {
       return NextResponse.json(

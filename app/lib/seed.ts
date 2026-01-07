@@ -9,7 +9,7 @@ export async function seedAdminUser() {
     // Check if admin user already exists
     const existingAdmin = await User.findOne({ role: 'admin' });
     if (existingAdmin) {
-      console.log('Admin user already exists');
+      // console.log('Admin user already exists');
       return;
     }
 
@@ -23,7 +23,7 @@ export async function seedAdminUser() {
     });
 
     await adminUser.save();
-    console.log('Admin user created successfully');
+    // console.log('Admin user created successfully');
   } catch (error) {
     console.error('Error seeding admin user:', error);
   }

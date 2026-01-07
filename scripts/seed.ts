@@ -12,7 +12,7 @@ async function seedAdminUser() {
   try {
     // Connect to MongoDB
     await mongoose.connect(MONGODB_URI);
-    console.log('Connected to MongoDB');
+    // console.log('Connected to MongoDB');
 
     // Import User model after connection
     const { User } = await import('../app/lib/models/User');
@@ -21,7 +21,7 @@ async function seedAdminUser() {
     const existingAdmin = await User.findOne({ role: 'admin' });
     
     if (existingAdmin) {
-      console.log('Admin user already exists');
+      // console.log('Admin user already exists');
       return;
     }
 
@@ -38,15 +38,15 @@ async function seedAdminUser() {
     });
 
     await adminUser.save();
-    console.log('Admin user created successfully');
-    console.log('Email: admin@chiplevels.com');
-    console.log('Password: admin123');
+    // console.log('Admin user created successfully');
+    // console.log('Email: admin@chiplevels.com');
+    // console.log('Password: admin123');
 
   } catch (error) {
     console.error('Error seeding admin user:', error);
   } finally {
     await mongoose.disconnect();
-    console.log('Disconnected from MongoDB');
+    // console.log('Disconnected from MongoDB');
   }
 }
 

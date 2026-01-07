@@ -2,38 +2,38 @@ import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 
 // Mock data for demonstration - in real app this would come from your database
-const featuredPosts = [
-  {
-    id: 1,
-    title: "Latest RTX 4090 vs RTX 4080: Performance Deep Dive",
-    excerpt: "We compare the flagship graphics cards in real-world gaming scenarios, synthetic benchmarks, and power efficiency tests.",
-    category: "Hardware",
-    author: "Tech Expert",
-    publishedAt: new Date('2024-01-15'),
-    readTime: "8 min read",
-    image: "/api/placeholder/400/250"
-  },
-  {
-    id: 2,
-    title: "5G Network Security: What You Need to Know",
-    excerpt: "Understanding the security implications of 5G networks and how to protect your devices in the new era of connectivity.",
-    category: "Networking",
-    author: "Network Specialist",
-    publishedAt: new Date('2024-01-12'),
-    readTime: "6 min read",
-    image: "/api/placeholder/400/250"
-  },
-  {
-    id: 3,
-    title: "iOS 18 vs Android 15: Feature Comparison",
-    excerpt: "A comprehensive look at the latest mobile operating systems and their new features, performance improvements, and user experience.",
-    category: "Mobile",
-    author: "Mobile Analyst",
-    publishedAt: new Date('2024-01-10'),
-    readTime: "10 min read",
-    image: "/api/placeholder/400/250"
-  }
-];
+// const featuredPosts = [
+//   {
+//     id: 1,
+//     title: "Latest RTX 4090 vs RTX 4080: Performance Deep Dive",
+//     excerpt: "We compare the flagship graphics cards in real-world gaming scenarios, synthetic benchmarks, and power efficiency tests.",
+//     category: "Hardware",
+//     author: "Tech Expert",
+//     publishedAt: new Date('2024-01-15'),
+//     readTime: "8 min read",
+//     image: "/api/placeholder/400/250"
+//   },
+//   {
+//     id: 2,
+//     title: "5G Network Security: What You Need to Know",
+//     excerpt: "Understanding the security implications of 5G networks and how to protect your devices in the new era of connectivity.",
+//     category: "Networking",
+//     author: "Network Specialist",
+//     publishedAt: new Date('2024-01-12'),
+//     readTime: "6 min read",
+//     image: "/api/placeholder/400/250"
+//   },
+//   {
+//     id: 3,
+//     title: "iOS 18 vs Android 15: Feature Comparison",
+//     excerpt: "A comprehensive look at the latest mobile operating systems and their new features, performance improvements, and user experience.",
+//     category: "Mobile",
+//     author: "Mobile Analyst",
+//     publishedAt: new Date('2024-01-10'),
+//     readTime: "10 min read",
+//     image: "/api/placeholder/400/250"
+//   }
+// ];
 
 const categories = [
   {
@@ -292,138 +292,6 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Posts Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">
-              Featured Articles
-            </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
-              Stay updated with our latest insights and reviews from the tech world
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {featuredPosts.map((post, index) => (
-              <article
-                key={post.id}
-                className="group animate-fade-in-up"
-                style={{animationDelay: `${index * 200}ms`}}
-              >
-                <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700">
-                  {/* Image Container */}
-                  <div className="relative h-56 bg-gradient-to-br from-slate-700 to-slate-600 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">
-                      Image Placeholder
-                    </span>
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-white font-medium">Read Article</span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-8">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="px-4 py-2 bg-gradient-to-r from-blue-900/30 to-purple-900/30 text-blue-300 text-sm font-medium rounded-full">
-                        {post.category}
-                      </span>
-                      <span className="text-slate-400 text-sm font-medium">
-                        {post.readTime}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-white mb-4 line-clamp-2 group-hover:text-blue-400 transition-colors duration-300">
-                      {post.title}
-                    </h3>
-                    <p className="text-slate-300 mb-6 line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="text-sm text-slate-400 font-medium">
-                        By {post.author}
-                      </span>
-                      <span className="text-sm text-slate-400">
-                        {formatDistanceToNow(post.publishedAt, { addSuffix: true })}
-                      </span>
-                    </div>
-                    
-                    {/* Read More Button */}
-                    <div className="pt-4 border-t border-slate-700">
-                      <span className="inline-flex items-center text-blue-400 font-medium group-hover:text-blue-300 transition-colors duration-300">
-                        Read More
-                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          
-          <div className="text-center mt-16 animate-fade-in-up" style={{animationDelay: '800ms'}}>
-            <Link
-              href="/blog"
-              className="group inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 relative overflow-hidden"
-            >
-              <span className="relative z-20">View All Posts</span>
-              <svg className="ml-3 w-6 h-6 relative z-20 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-              
-              {/* Simple hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-              
-              {/* Subtle shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 z-10"></div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900/50 to-blue-900/50"></div>
-          <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div>
-        
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-            Stay Updated with ChipLevels
-          </h2>
-          <p className="text-xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '200ms'}}>
-            Get the latest tech news, reviews, and insights delivered to your inbox
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '400ms'}}>
-            <div className="flex-1 relative group">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-6 py-4 rounded-2xl text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 bg-white/90 backdrop-blur-sm group-hover:bg-white group-focus:bg-white"
-              />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 blur-xl"></div>
-            </div>
-            <button className="px-10 py-4 bg-white text-blue-600 font-semibold rounded-2xl hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/25 transform">
-              Subscribe
-            </button>
           </div>
         </div>
       </section>

@@ -519,7 +519,7 @@ export default function AdminDashboard() {
                     {/* Actions */}
                     <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
                       <Link
-                        href={`/blog/${post.slug}`}
+                        href={`/blog/${post._id}`}
                         className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                       >
                         View Post
@@ -545,7 +545,7 @@ export default function AdminDashboard() {
                           )}
                         </button>
                         <Link
-                          href={`/admin/edit-post/${post.slug}`}
+                          href={`/admin/edit-post/${post._id}`}
                           className="text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

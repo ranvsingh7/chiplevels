@@ -1,8 +1,28 @@
+'use client';
+
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { notFound } from 'next/navigation';
 
-// Mock data for demonstration
+interface BlogPost {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  publishedAt: string;
+  tags: string[];
+  views: number;
+  featuredImage?: string;
+}
+
+interface CategoryPageProps {
+  params: Promise<{ category: string }>;
+}
+
+// Category metadata
 const categoryData = {
   hardware: {
     name: "Hardware",
@@ -30,86 +50,66 @@ const categoryData = {
   }
 };
 
-const postsByCategory = {
-  hardware: [
-    {
-      id: 1,
-      title: "Latest RTX 4090 vs RTX 4080: Performance Deep Dive",
-      excerpt: "We compare the flagship graphics cards in real-world gaming scenarios, synthetic benchmarks, and power efficiency tests.",
-      author: "Tech Expert",
-      publishedAt: new Date('2024-01-15'),
-      readTime: "8 min read",
-      tags: ["GPU", "Gaming", "Performance", "RTX"]
-    },
-    {
-      id: 5,
-      title: "SSD vs HDD: Storage Solutions for 2024",
-      excerpt: "Compare different storage solutions and understand which type of drive is best for your specific use case.",
-      author: "Storage Expert",
-      publishedAt: new Date('2024-01-05'),
-      readTime: "7 min read",
-      tags: ["Storage", "SSD", "HDD", "Performance"]
-    }
-  ],
-  networking: [
-    {
-      id: 2,
-      title: "5G Network Security: What You Need to Know",
-      excerpt: "Understanding the security implications of 5G networks and how to protect your devices.",
-      author: "Network Specialist",
-      publishedAt: new Date('2024-01-12'),
-      readTime: "6 min read",
-      tags: ["5G", "Security", "Networking", "Mobile"]
-    },
-    {
-      id: 6,
-      title: "WiFi 7: The Future of Wireless Connectivity",
-      excerpt: "Discover the revolutionary features of WiFi 7, including increased bandwidth and lower latency.",
-      author: "Wireless Specialist",
-      publishedAt: new Date('2024-01-03'),
-      readTime: "9 min read",
-      tags: ["WiFi 7", "Wireless", "Networking", "Technology"]
-    }
-  ],
-  mobile: [
-    {
-      id: 3,
-      title: "iOS 18 vs Android 15: Feature Comparison",
-      excerpt: "A comprehensive look at the latest mobile operating systems and their new features.",
-      author: "Mobile Analyst",
-      publishedAt: new Date('2024-01-10'),
-      readTime: "10 min read",
-      tags: ["iOS", "Android", "Mobile", "OS"]
-    }
-  ],
-  software: [
-    {
-      id: 4,
-      title: "Building Scalable Web Applications with Next.js 15",
-      excerpt: "Explore the new features in Next.js 15 and learn how to build high-performance applications.",
-      author: "Developer Advocate",
-      publishedAt: new Date('2024-01-08'),
-      readTime: "12 min read",
-      tags: ["Next.js", "Web Development", "React", "Performance"]
-    }
-  ]
-};
-
-interface CategoryPageProps {
-  params: {
-    category: string;
-  };
-}
-
 export default function CategoryPage({ params }: CategoryPageProps) {
-  const category = params.category as keyof typeof categoryData;
-  
-  if (!categoryData[category]) {
-    notFound();
+  const [category, setCategory] = useState<string>('');
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      const categoryParam = resolvedParams.category.toLowerCase();
+      
+      // Validate category
+      if (!categoryData[categoryParam as keyof typeof categoryData]) {
+        notFound();
+      }
+      
+      setCategory(categoryParam);
+      fetchPosts(categoryParam);
+    };
+    
+    resolveParams();
+  }, [params]);
+
+  const fetchPosts = async (categoryParam: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`/api/blog/posts?category=${categoryParam}&limit=50`);
+      const data = await response.json();
+      
+      if (response.ok && data.posts) {
+        setPosts(data.posts);
+      } else {
+        setError('Failed to load posts');
+      }
+    } catch (err) {
+      console.error('Error fetching posts:', err);
+      setError('Failed to load posts');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!category || loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-400">Loading posts...</p>
+        </div>
+      </div>
+    );
   }
 
-  const categoryInfo = categoryData[category];
-  const posts = postsByCategory[category] || [];
+  const categoryInfo = categoryData[category as keyof typeof categoryData];
+  
+  if (!categoryInfo) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20">
@@ -142,7 +142,27 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {posts.length > 0 ? (
+        {error ? (
+          <div className="text-center py-16">
+            <div className="w-24 h-24 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-12 h-12 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+              Error Loading Posts
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
+              {error}
+            </p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+            >
+              Browse All Posts
+            </Link>
+          </div>
+        ) : posts.length > 0 ? (
           <>
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
@@ -157,20 +177,40 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
                 <article
-                  key={post.id}
-                  className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                  key={post._id}
+                  className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
                 >
-                  <div className="h-48 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center">
-                    <span className="text-slate-500 dark:text-slate-400 text-sm">Image Placeholder</span>
-                  </div>
-                  <div className="p-6">
+                  {/* Featured Image */}
+                  {post.featuredImage ? (
+                    <div className="h-48 relative overflow-hidden">
+                      <img
+                        src={post.featuredImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-48 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center">
+                      <div className="text-4xl opacity-50">
+                        {category === 'hardware' && '🖥️'}
+                        {category === 'networking' && '🌐'}
+                        {category === 'mobile' && '📱'}
+                        {category === 'software' && '💻'}
+                      </div>
+                    </div>
+                  )}
+                  <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-2 mb-3">
                       <span className={`px-3 py-1 bg-gradient-to-r ${categoryInfo.color} bg-opacity-20 text-slate-800 dark:text-white text-xs font-medium rounded-full`}>
                         {categoryInfo.name}
                       </span>
-                      <span className="text-slate-500 dark:text-slate-400 text-sm">
-                        {post.readTime}
-                      </span>
+                      <div className="flex items-center space-x-1 text-slate-500 dark:text-slate-400 text-sm">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span>{post.views || 0}</span>
+                      </div>
                     </div>
                     <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 line-clamp-2">
                       {post.title}
@@ -180,32 +220,41 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     </p>
                     
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded-md"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {post.tags.slice(0, 3).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded-md"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {post.tags.length > 3 && (
+                          <span className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs rounded-md">
+                            +{post.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-4">
                       <span className="text-sm text-slate-500 dark:text-slate-400">
                         By {post.author}
                       </span>
                       <span className="text-sm text-slate-500 dark:text-slate-400">
-                        {formatDistanceToNow(post.publishedAt, { addSuffix: true })}
+                        {formatDistanceToNow(new Date(post.publishedAt), { addSuffix: true })}
                       </span>
                     </div>
 
-                    <Link
-                      href={`/blog/${post.id}`}
-                      className="mt-4 inline-block w-full text-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
-                    >
-                      Read More
-                    </Link>
+                    <div className="mt-auto">
+                      <Link
+                        href={`/blog/${post._id}`}
+                        className="inline-block w-full text-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+                      >
+                        Read More
+                      </Link>
+                    </div>
                   </div>
                 </article>
               ))}

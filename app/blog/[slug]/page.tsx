@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -28,12 +29,24 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  // Helper function to check if a string is a valid MongoDB ObjectId
+  const isValidObjectId = (id: string): boolean => {
+    return /^[0-9a-fA-F]{24}$/.test(id);
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const resolvedParams = await params;
-        const response = await fetch(`/api/blog/posts/${resolvedParams.slug}`);
+        const slugFromUrl = resolvedParams.slug;
+        
+        // If the slug is not a valid ObjectId (meaning it's a title-based slug),
+        // we'll fetch the post and then redirect to the ID-based URL
+        const isTitleBasedSlug = !isValidObjectId(slugFromUrl);
+        
+        const response = await fetch(`/api/blog/posts/${slugFromUrl}`);
         
         if (!response.ok) {
           if (response.status === 404) {
@@ -45,7 +58,15 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         }
 
         const data = await response.json();
-        setPost(data.post);
+        const fetchedPost = data.post;
+        
+        // If we accessed via a title-based slug, redirect to the ID-based URL
+        if (isTitleBasedSlug && fetchedPost._id) {
+          router.replace(`/blog/${fetchedPost._id}`);
+          return;
+        }
+        
+        setPost(fetchedPost);
       } catch (error) {
         console.error('Error fetching post:', error);
         setError('Failed to load post');
@@ -55,7 +76,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     };
 
     fetchPost();
-  }, [params]);
+  }, [params, router]);
 
   if (loading) {
     return (
